@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Portfolio – Esha Seta</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #0f0f0f;
+  --text: #ffffff;
+  --sub: #c1c1c1;
+  --transition: cubic-bezier(0.25, 1, 0.25, 1);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Montserrat", sans-serif;
+  overflow-x: hidden;
+}
+.top-bar {
+      position: fixed;
+      top: 24px;
+      left: 32px;
+      right: 32px;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+.menubar {
+      width: 40px;
+      height: 24px;
+      border-radius: 999px;
+      border: 1px solid #aaa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(240, 240, 240, 0.9);
+    }
+    .menubar-lines {
+      width: 18px;
+      height: 2px;
+      background: #333;
+      position: relative;
+    }
+
+    .my-name {
+      font-size: 15px;
+      letter-spacing: 2px;
+      text-transform: lowercase;
+      font-weight: 500;
+      text-align: center;
+      margin: 0 auto;
+    }
+
+    .contact-btn {
+      border-radius: 999px;
+      border: 1px solid #aaa;
+      padding: 6px 18px;
+      font-size: 15px;
+      background: #e4e4e4;
+      color: #333;
+    }
+
+    
+    .menu-overlay {
+      position: fixed;
+      top: 0; bottom: 0; left: 0; right: 0;
+      background: rgba(0,0,0,0.35);
+      opacity: 0;
+      z-index: 25;
+      transition: opacity 0.25s ease;
+    }
+    .side-menu {
+      position: fixed;
+      top:0; bottom:0; left:0;
+      width:260px;
+      padding:24px;
+      background:#f0f0f0;
+      transform:translateX(-100%);
+      transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);
+      z-index:26;
+      display:flex;
+      flex-direction:column;
+      gap:24px;
+    }
+    .side-menu h3 {
+      font-size:1rem;
+      text-transform:uppercase;
+      letter-spacing:0.1em;
+      color:#888;
+    }
+    .side-menu nav a {
+      display:block;
+      padding:8px 0;
+      color:#333;
+      text-decoration:none;
+      font-size:15px;
+    }
+    .side-menu nav a:hover { color:var(--accent); }
+
+    body.menu-open .menu-overlay {
+      opacity:1;
+      pointer-events:auto;
+    }
+    body.menu-open .side-menu {
+      transform:translateX(0);
+    }
+
+
+.hero-stage {
+  height: 180vh;
+  position: relative;
+}
+
+.hero-stick {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap:0;
+}
+
+
+.hero-text {
+  position: absolute;
+  bottom: 140px;        
+  text-align: center;
+  width: 100%;
+  z-index: 12;
+  transition: 0.6s var(--transition);
+}
+
+.hero-title {
+  font-size: 100px;
+  letter-spacing: 10px;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+.hero-sub {
+  margin-top:10px;
+  color: var(--sub);
+  font-size: .9rem;
+}
+
+.hero-stack {
+  position: relative;
+  width: 290px;
+  height: 380px;
+  transform-style: preserve-3d;
+  perspective: 1500px;
+  z-index: 5;
+}
+
+.hero-card {
+  position:absolute;
+  inset:0;
+  border-radius:22px;
+  overflow:hidden;
+  background:#222;
+  box-shadow:0 28px 60px rgba(0,0,0,0.55);
+  transition: transform 0.6s var(--transition);
+  will-change: transform;
+}
+
+.hero-card img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.gallery-meta {
+  position:fixed;
+  bottom:20px;
+  right:70px;
+  text-align:right;
+  opacity:0;
+  transform:translateY(40px);
+  transition:opacity .9s var(--transition), transform .9s var(--transition);
+  z-index:100;
+}
+
+.gallery-title {
+  font-size: 80px;
+  letter-spacing:5px;
+}
+
+.gallery-subtitle {
+  font-size:12px;
+  color:var(--sub);
+}
+
+.page-build {
+  background: white;
+  color: #111;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.build-sentences {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  z-index: 1;
+}
+
+.build-sentence {
+  font-family: "Poppins", sans-serif;
+  font-size: 80px;
+  font-weight: 800;
+  opacity: 0.12;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: 0.4s ease;
+}
+
+.page-build:hover .build-sentence:nth-child(1),
+.page-build:hover .build-sentence:nth-child(3) {
+  transform: translateX(-25px);
+}
+.page-build:hover .build-sentence:nth-child(2) {
+  transform: translateX(25px);
+}
+
+.build-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+  margin-top: -30px;   
+}
+
+
+.build-shape {
+  width: min(900px, 85vw);
+  height: min(330px, 45vw);
+  border-radius: 200px;
+  overflow: hidden;
+  background: #eee;
+  box-shadow: 0 40px 120px rgba(0,0,0,0.22);
+}
+
+.build-shape img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+.build-buttons {
+  display: flex;
+  gap: 14px;
+}
+
+.build-button {
+  background: white;
+  color: #222;
+  border: 1px solid #ccc;
+  padding: 10px 22px;
+  border-radius: 999px;
+  letter-spacing: 0.15em;
+  font-size: 10px;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.build-button.active {
+  background: #111;
+  color: white;
+  border-color: #111;
+}
+</style>
+</head>
+
+<body>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+  <aside class="side-menu" id="sideMenu">
+    <h3>Navigate</h3>
+    <nav>
+      <a href="#">Home</a>
+      <a href="./website/about.html">About me</a>
+      <a href="./website/projects.html">Projects</a>
+      <a href="./website/contact.html">Contact</a>
+    </nav>
+  </aside>
+
+  <div class="top-bar">
+    <div class="menubar" id="menubar">
+      <div class="menubar-lines"></div>
+    </div>
+    <div class="my-name">esha seta</div>
+    <a href="contact.html" class="contact-btn">Contact me</a>
+  </div>
+
+<section class="hero-stage">
+  <div class="hero-stick">
+
+    
+    <div class="hero-stack">
+      <div class="hero-card" id="card0"><img src="./website/gallery 4.jpeg"></div>
+      <div class="hero-card" id="card1"><img src="./website/gallery 1.jpeg"></div>
+      <div class="hero-card" id="card2"><img src="./website/gallery 2.jpeg"></div>
+      <div class="hero-card" id="card3"><img src="./website/gallery 3.jpeg"></div>
+      <div class="hero-card" id="card4"><img src="./website/profile.jpeg"></div>
+    </div>
+
+    
+    <div class="hero-text" id="heroText">
+      <h1 class="hero-title">HELLO, I'M<br>ESHA SETA</h1>
+      <p class="hero-sub">Exploring communication design through visuals and storytelling.</p>
+    </div>
+
+  </div>
+</section>
+
+
+<aside class="gallery-meta" id="galleryMeta">
+  <h2 class="gallery-title">MY GALLERY</h2>
+  <p class="gallery-subtitle">
+    A glimpse into the visuals that shape how I see the world.
+  </p>
+</aside>
+
+<section class="page-build" id="build">
+  <div class="build-wrapper">
+
+    <div class="build-sentences">
+      <p class="build-sentence">BUILD. CREATE. DESIGN.</p>
+      <p class="build-sentence">BUILD. CREATE. DESIGN.</p>
+      <p class="build-sentence">BUILD. CREATE. DESIGN.</p>
+    </div>
+
+    <div class="build-content">
+
+      <div class="build-shape">
+        <img id="buildImage"
+             src="./website/poster.jpeg"
+             alt="">
+      </div>
+
+      <div class="build-buttons">
+        <button class="build-button active" data-image="./website/poster.jpeg">
+          POSTER
+        </button>
+
+        <button class="build-button"
+                data-image="./website/publication.jpeg">
+          PUBLICATION
+        </button>
+
+        <button class="build-button"
+                data-image="./website/bradning.jpeg">
+          BRANDING
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<script>
+
+  
+const bodyEl = document.body;
+const menubarBtn = document.querySelector(".menubar");
+const menuOverlayEl = document.getElementById("menuOverlay");
+const sideMenuLinks = document.querySelectorAll(".menu-link");
+
+if (menubarBtn && menuOverlayEl) {
+  menubarBtn.addEventListener("click", () => {
+    bodyEl.classList.toggle("menu-open");
+  });
+
+  menuOverlayEl.addEventListener("click", () => {
+    bodyEl.classList.remove("menu-open");
+  });
+}
+
+
+sideMenuLinks.forEach(link => {
+  const target = link.dataset.target;
+  if (!target) return;
+
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+    const section = document.querySelector(target);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+    bodyEl.classList.remove("menu-open");
+  });
+});
+
+const text = document.getElementById("heroText");
+const meta = document.getElementById("galleryMeta");
+
+const cards = [
+  card0, card1, card2, card3, card4
+];
+
+function clamp(v,min,max){ return Math.max(min,Math.min(max,v)); }
+
+
+const fan = [
+  {x:-70,y:40,rot:-12,scale:0.86},
+  {x:-35,y:20,rot:-6,scale:0.92},
+  {x:0,y:0,rot:0,scale:1.05},
+  {x:35,y:20,rot:6,scale:0.92},
+  {x:70,y:40,rot:12,scale:0.86},
+];
+
+function update(){
+  const h = innerHeight;
+  const s = scrollY;
+  const heroH = h*1.8;
+
+  const p = clamp(s / (heroH - h),0,1);
+
+ 
+  const tF = clamp(p/0.45,0,1);
+  text.style.opacity = (1-tF);
+  text.style.transform = `translateY(${ -tF*140 }px) scale(${1-tF*0.04})`;
+
+  
+  if(p <= 0.62){
+    const c = clamp((p-0.05)/0.55,0,1);
+
+    cards.forEach((card,i)=>{
+      const f = fan[i];
+      const inv = 1-c;
+      card.style.transform =
+        `translate(${f.x*inv}px, ${f.y*inv}px)
+         rotate(${f.rot*inv}deg)
+         scale(${f.scale + (1-f.scale)*c})`;
+    });
+
+  } else {
+    
+    const sp = clamp((p-0.62)/0.38,0,1);
+    const gap = 260;
+    const mid = 2;
+
+    cards.forEach((card,i)=>{
+      const dx = (i-mid)*gap*sp;
+      const dy = 120*sp;
+      const sc = 1 - sp*0.18;
+
+      card.style.transform =
+        `translate(${dx}px, ${dy}px) scale(${sc})`;
+    });
+  }
+
+  
+  const metaP = clamp((p-0.70)/0.25, 0,1);
+  meta.style.opacity = metaP;
+  meta.style.transform = `translateY(${40 - metaP*40}px)`;
+}
+
+addEventListener("scroll",update);
+addEventListener("resize",update);
+addEventListener("load",update);
+
+
+  const buildButtons = document.querySelectorAll(".build-button");
+  const buildImage   = document.getElementById("buildImage");
+
+  buildButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      
+      
+      buildButtons.forEach(b => b.classList.remove("active"));
+      
+    
+      btn.classList.add("active");
+
+      
+      const newImg = btn.getAttribute("data-image");
+
+      
+      buildImage.style.opacity = "0";
+      setTimeout(() => {
+        buildImage.src = newImg;
+        buildImage.style.opacity = "1";
+      }, 200);
+    });
+  });
+
+
+</script>
+
+</body>
+</html>
